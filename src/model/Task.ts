@@ -29,6 +29,10 @@ export default class Task {
         return this.#completed
     }
 
+    get active() {
+        return !this.#completed
+    }
+
     toggleStatus() {
         return this.completed ? this.activate() : this.complete()
     }

@@ -1,23 +1,38 @@
+import React, { useState } from "react";
+import Form from "../components/form/Form";
+import List from "../components/list/List";
+import Content from "../components/template/Content";
+import Header from "../components/template/Header";
+import initialTasks from "../data/mock";
 import Task from "../model/Task";
 
 export default function Home() {
+  const [tasks, setTasks] = useState(initialTasks);
 
-  let task: Task = new Task(1, 'Task example');
-  task = task.toggleStatus()
-  task = task.toggleStatus()
+  const newCreatedTask = (newTask: Task) => {
+    setTasks(tasks.addTask(newTask));
+  };
 
   return (
-    <div className={`
+    <div
+      className={`
       flex flex-col
       justify-center
-      items-center
-      text-white
-      bg-purple-600
       h-screen
-    `}>
-      <span>{task.id}</span>
-      <span>{task.description}</span>
-      <span>{task.completed ? 'Concluída' : 'Ativa'}</span>
+      bg-gray-300
+    `}
+    >
+      <Header>
+        <Form newCreatedTask={newCreatedTask} />
+      </Header>
+      <Content>
+        <List
+          tasks={tasks}
+          onChange={(newTasks) => {
+            setTasks(newTasks);
+          }}
+        />
+      </Content>
     </div>
-  )
+  );
 }
